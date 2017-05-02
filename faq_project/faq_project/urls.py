@@ -19,5 +19,6 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', include('faq_app.urls')),
+    url(r'^faq/', include('faq_app.urls')),
+    url(r'^$' , include('faq_app.urls'))
 ]
