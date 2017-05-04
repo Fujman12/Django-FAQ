@@ -23,7 +23,7 @@ class Group(models.Model):
 
     name = models.CharField("Group name", max_length = 150, blank =  True, null = True)
     topic = models.ForeignKey(Topic, verbose_name = "Topic", related_name = 'groups')
-    status = models.IntegerField(choices = STATUS_CHOICES, default =ACTIVE)
+    status = models.IntegerField(choices = STATUS_CHOICES, default = ACTIVE)
 
     objects = GroupManager()
 
@@ -44,8 +44,22 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
+    TEXT = 0
+    IMG = 1
+    VIDEO = 2
+    MAP = 3
+
+    KIND_CHOICES = (
+        (TEXT,  _('Text')),
+        (IMG, _('Image')),
+        (VIDEO, _('Videos')),
+        (MAP, _('Map')),
+
+    )
+
     text = models.CharField("Answer text", max_length = 150)
     group = models.ForeignKey(Group, verbose_name = "Group", related_name = 'answers')
+    kind = models.CharField(max_length = 1, default = TEXT)
 
     def __str__(self):
         a_str = "{} {}".format(self.group, self.text)

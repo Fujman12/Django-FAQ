@@ -93,7 +93,7 @@ $(function () {
         type: 'get',
 
         success: function (data) {
-          alert("Published");
+          alert("Question group activated!");
         }
       });
     } else {
@@ -102,7 +102,7 @@ $(function () {
         type: 'get',
 
         success: function (data) {
-          alert("Deactivated!");
+          alert("Question group deactivated!");
         }
       });
     }
@@ -140,7 +140,7 @@ $(function () {
         //alert("Question " + e.attrs.value +" removed");
       }
     });
-    
+
 
   })
 
@@ -156,7 +156,20 @@ $(function () {
     //alert('Token removed! Token value was: ' + e.attrs.value)
   })
 
+  $(".js-new-answer").click(function () {
 
+    $.ajax({
+      url: '/faq/create_answer/' + $(this).attr("group-id"),
+      type: 'get',
+      dataType: 'json',
+      beforeSend: function () {
+        $("#modal-book").modal("show");
+      },
+      success: function (data) {
+        $("#modal-book .modal-content").html(data.html_form);
+      }
+    });
+  });
 
 
 

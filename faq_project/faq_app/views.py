@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.core.urlresolvers import reverse
 
 from .models import Topic, Group, Question
-from .forms import TopicForm
+from .forms import TopicForm, AnswerForm
 # Create your views here.
 def index(request):
 
@@ -107,3 +107,29 @@ def delete_question(request, pk):
     q.delete()
 
     return JsonResponse({'none':'none'})
+
+def create_answer(request,pk):
+    data = dict()
+
+    if request.method == "POST":
+        form = TopicForm(request.POST)
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+
+            topics = Topic.objects.all()
+            data['html_topics_list'] = render_to_string('faq_app/partial/topics_list_options.html', {
+                'topics': topics
+            })
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = AnswerForm()
+
+    context = {'form': form, 'pk':pk }
+
+    data['html_form'] = render_to_string('faq_app/partial/create_answer_form.html',
+        context,
+        request=request,
+    )
+    return JsonResponse(data)

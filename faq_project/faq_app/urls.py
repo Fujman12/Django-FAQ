@@ -12,5 +12,7 @@ urlpatterns = [
     url(r'group_questions/(?P<pk>[0-9]+)', views.group_questions, name = "group_questions"),
 
     url(r'create_question/(?P<pk>[0-9]+)', views.create_question, name="create_question"),
-    url(r'delete_question/(?P<pk>[0-9]+)', views.delete_question, name="delete_question")
+    url(r'delete_question/(?P<pk>[0-9]+)', views.delete_question, name="delete_question"),
+
+    url(r'create_answer/(?P<pk>[0-9]+)', views.create_answer, name="create_answer"),
 ]

@@ -115,7 +115,7 @@
 											</div>
 										</div>
 										</span>
-										<button style="float: right; height: 38px; margin-top: 10px;" class="btn btn-success" type="button">
+										<button style="float: right; height: 38px; margin-top: 10px;" class="btn btn-success js-new-answer" group-id="{{group.pk}}" type="button">
 											<span class="glyphicon glyphicon-plus"></span>
 										</button>
 									</div>
@@ -123,60 +123,9 @@
 							</div>
 							{% endfor %}
 						</div>
-
-
 					</div>
 				</div>
 			</header>
-
-
-<div class="edit-answer">
-	<div class="edit-answer-top-panel">Edit answer</div>
-	<div class="edit-answer-mnu">
-		<ul>
-			<li id="text">text</li> |
-			<li id="video">video</li> |
-			<li id="picture">picture</li> |
-			<li id="maps">maps</li>
-		</ul>
-	</div>
-	<div class="edit-answer-content-text">
-		<div class="edit-answer-wrapper">
-			<label for="input-text">Text *</label>
-			<input id="input-text" type="text" placeholder="...">
-		</div>
-	</div>
-	<div class="edit-answer-content-video">
-		<div class="edit-answer-wrapper">
-			<label for="input-video-name">Name of video</label>
-			<input id="input-video-name" type="text" placeholder="...">
-		</div>
-		<div class="edit-answer-wrapper">
-			<label for="input-video-url">URL of video</label>
-			<input id="input-video-url" type="text" placeholder="...">
-		</div>
-	</div>
-	<div class="edit-answer-content-picture">
-		<div class="edit-answer-wrapper">
-			<label for="input-picture-name">Name of image</label>
-			<input id="input-picture-name" type="text" placeholder="...">
-		</div>
-		<div class="edit-answer-wrapper">
-			<label for="input-picture-url">URL of image</label>
-			<input id="input-picture-url" type="text" placeholder="...">
-		</div>
-	</div>
-	<div class="edit-answer-content-maps">
-		map
-	</div>
-	<div class="edit-answer-buttons">
-		<button class="btn btn-space btn-default">Default</button>
-		<div class="edit-answer-buttons-wrapper">
-			<button class="btn btn-space btn-primary active">Save</button>
-			<button class="btn btn-space btn-primary active">Extra part ></button>
-		</div>
-	</div>
-</div>
 			<div class="hidden">
 				<div class="control-group" id="fields">
 					<div class="controls">
