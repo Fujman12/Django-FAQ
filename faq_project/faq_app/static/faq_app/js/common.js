@@ -38,9 +38,12 @@ $(function() {
 		// 	$(".field-remove").remove();
 		// });
 
-		$('#tokenfield').tokenfield({
-			tokens: "Fill question"
-		});
+		//$('.lol').tokenfield();
+		//$('.lol').tokenfield();
+		//$('.lol').tokenfield('createToken', { value: 'violet', label: 'Violet' });
+		//$("#tokenfield63").tokenfield('createToken', { value: 'violellllll', label: 'Violet' });
+		
+
 	//Chrome Smooth Scroll
 	try {
 		$.browserSelector();

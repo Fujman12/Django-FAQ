@@ -21,21 +21,25 @@ class Group(models.Model):
         (INACTIVE,  _('Inactive')),
     )
 
-    name = models.CharField("Group name", max_length = 150)
+    name = models.CharField("Group name", max_length = 150, blank =  True, null = True)
     topic = models.ForeignKey(Topic, verbose_name = "Topic", related_name = 'groups')
-    status = models.CharField(max_length = 1, choices = STATUS_CHOICES, default =ACTIVE)
+    status = models.IntegerField(choices = STATUS_CHOICES, default =ACTIVE)
 
     objects = GroupManager()
 
     def __str__(self):
         return self.name
 
+    def is_active(self):
+        return self.status == Group.ACTIVE
+
+
 class Question(models.Model):
     text = models.CharField("Question text", max_length = 150)
     group = models.ForeignKey(Group, verbose_name = "Group", related_name = 'questions')
 
     def __str__(self):
-        q_str = "{} {}".format(self.group, self.text)
+        q_str = "{} {}".format(str(self.group), str(self.text))
         return q_str
 
 

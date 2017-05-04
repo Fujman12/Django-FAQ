@@ -77,25 +77,26 @@
 								<div class="buttons">
 									<input type="submit" value="SAVE ALL / TRAIN" class="btn btn-space btn-primary hover">
 									<button class="btn btn-space btn-primary js-new-topic">New topic <span class="glyphicon glyphicon-plus-sign"></span></button>
-									<button class="btn btn-space btn-primary">New Q/A <span class="glyphicon glyphicon-plus-sign"></span></button>
+									<button class="btn btn-space btn-primary js-new-group" data-url="{% url 'create_group' pk=current_topic.pk %}">New Q/A <span class="glyphicon glyphicon-plus-sign"></span></button>
 								</div>
 							</div>
 						</div>
 						<div id="accordion2" class="panel-group accordion accordion-color">
+							{% for group in current_topic.groups.all %}
 							<div class="panel panel-full-primary">
 								<div class="panel-heading">
-									<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion2" href="#collapse-1"><i class="icon mdi mdi-chevron-down"></i> Primary Color</a></h4>
+									<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion2" href="#collapse-{{group.pk}}"><i class="icon mdi mdi-chevron-down"></i> Primary Color</a></h4>
 									<div class="switchbutton-glyphicon-wrapper">
 										<div class="switch-button switch-button-sm">
-											<input type="checkbox" checked="" name="swt1" id="swt1"><span>
-											<label for="swt1"></label></span>
+											<input class="js-switch-published" type="checkbox" {% if group.is_active %} checked {% endif %} data-url="/faq/update_group/{{group.pk}}/" name="swt{{group.pk}}" id="swt{{group.pk}}"><span>
+											<label for="swt{{group.pk}}"></label></span>
 										</div>
-										<span class="glyphicon glyphicon-remove-circle"></span>
+										<span class="glyphicon glyphicon-remove-circle js-delete-group" data-url="{% url 'delete_group' pk=group.pk %}"></span>
 									</div>
 								</div>
-								<div id="collapse-1" class="panel-collapse collapse">
+								<div id="collapse-{{group.pk}}" class="panel-collapse collapse">
 									<div class="panel-body">
-										<input type="text" class="form-control" placeholder="Type something and hit enter" id="tokenfield" value="">
+										<input type="text" class="form-control lol" data-delimiter="/"  id="tokenfield{{group.pk}}" group-id="{{group.pk}}" placeholder="Type something"/>
 										<span class="fields"><div class="control-group" id="fields">
 											<div class="controls">
 												<form role="form" autocomplete="off">
@@ -120,44 +121,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="panel panel-full-primary">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion2" href="#collapse-2"><i class="icon mdi mdi-chevron-down"></i> Primary Color</a></h4>
-									<div class="switchbutton-glyphicon-wrapper">
-										<div class="switch-button switch-button-sm">
-											<input type="checkbox" checked="" name="swt2" id="swt2"><span>
-											<label for="swt2"></label></span>
-										</div>
-										<span class="glyphicon glyphicon-remove-circle"></span>
-									</div>
-								</div>
-								<div id="collapse-2" class="panel-collapse collapse">
-									<div class="panel-body">
-										<input type="text" class="form-control" placeholder="Type something and hit enter" id="tokenfield" value="">
-										<span class="fields"><div class="control-group" id="fields">
-											<div class="controls">
-												<form role="form" autocomplete="off">
-													<div class="entry input-group col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-xs-12">
-														<input class="form-control" name="fields[]" type="text" placeholder="Good question :)"/>
-														<span class="input-group-btn">
-															<button class="btn btn-success" type="button">
-																<span class="glyphicon glyphicon-cog"></span>
-															</button>
-															<button class="btn btn-danger" type="button">
-																<span class="glyphicon glyphicon-minus"></span>
-															</button>
-														</span>
-													</div>
-												</form>
-											</div>
-										</div>
-										</span>
-										<button style="float: right; height: 38px; margin-top: 10px;" class="btn btn-success" type="button">
-											<span class="glyphicon glyphicon-plus"></span>
-										</button>
-									</div>
-								</div>
-							</div>
+							{% endfor %}
 						</div>
 
 
@@ -271,11 +235,13 @@
 	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
 	<script src="libs/respond/respond.min.js"></script>
 	<![endif]-->
+
+	<script src="{% static 'faq_app/js/libs.js'%}"></script>
+	<script src="{% static 'faq_app/js/common.js'%}"></script>
 	<script src="{% static 'faq_app/js/action.js' %}"></script>
 	<script>
 		$(document).ready(function() {
-			//alert("something");
-			$("#topic-name").val('{{current_topic.pk}}')
+			$("#topic-name").val('{{current_topic.pk}}');
 		});
 	</script>
 	<!-- Load CSS -->
@@ -287,13 +253,23 @@
 		loadCSS("{% static 'faq_app/css/header.min.css'%}"); //Header Styles (compress & paste to header after release)
 		loadCSS("{% static 'faq_app/css/main.min.css'%}");   //User Styles + Media Queries
 	</script>
+	<script>
+		$("input[id^='tokenfield']").tokenfield();
 
-	<!-- Load Scripts -->
-	<script>var scr = {"scripts":[
-		{"src" : "{% static 'faq_app/js/libs.js'%}", "async" : false},
-		{"src" : "{% static 'faq_app/js/common.js'%}", "async" : false}
-		]};!function(t,n,r){"use strict";var c=function(t){if("[object Array]"!==Object.prototype.toString.call(t))return!1;for(var r=0;r<t.length;r++){var c=n.createElement("script"),e=t[r];c.src=e.src,c.async=e.async,n.body.appendChild(c)}return!0};t.addEventListener?t.addEventListener("load",function(){c(r.scripts);},!1):t.attachEvent?t.attachEvent("onload",function(){c(r.scripts)}):t.onload=function(){c(r.scripts)}}(window,document,scr);
+		{% for group in current_topic.groups.all %}
+			$.ajax({
+				url: '{% url 'group_questions' pk=group.pk %}',
+				type: 'get',
+
+				success: function (data) {
+					$("#tokenfield{{group.id}}").tokenfield('setTokens', data);
+				}
+			});
+		{% endfor %}
+
 	</script>
+
+
 
 
 </body>

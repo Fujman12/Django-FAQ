@@ -1,22 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.core.urlresolvers import reverse
 
-from .models import Topic
+from .models import Topic, Group, Question
 from .forms import TopicForm
 # Create your views here.
 def index(request):
-    topic = Topic.objects.first()
 
-    topics = Topic.objects.all()
-    groups = topic.groups.all()
-
-    context = dict()
-    context['groups'] = groups
-    context['topics'] = topics
-    context['current_topic'] = topic
-
-    return render(request, 'faq_app/index.html', context)
+    return redirect('topic', pk=1)
 
 def topic(request,pk):
     topic = Topic.objects.filter(pk = pk).first()
@@ -31,8 +23,6 @@ def topic(request,pk):
 
     return render(request, 'faq_app/index.html', context)
 
-def form(request):
-    return render(request, 'faq_app/form.html')
 
 def create_topic(request):
     data = dict()
@@ -58,3 +48,62 @@ def create_topic(request):
         request=request,
     )
     return JsonResponse(data)
+
+def create_group(request, pk):
+    topic = Topic.objects.filter(pk=pk).first()
+
+    group = Group(topic = topic)
+    group.save()
+
+    return redirect('topic', pk=pk)
+
+def delete_group(request, pk):
+    group = get_object_or_404(Group, pk=pk)
+    group.delete()
+
+    return redirect('topic', pk=group.topic.pk)
+
+def update_group(request, pk, action):
+    group = get_object_or_404(Group, pk=pk)
+
+    if action == "activate":
+        group.status = Group.ACTIVE
+    elif action == "deactivate":
+        group.status = Group.INACTIVE
+    else:
+        pass
+
+    group.save()
+
+    return redirect('topic', pk=group.topic.pk)
+
+def group_questions(request, pk):
+    group = get_object_or_404(Group, pk=pk)
+
+    data = dict()
+
+    questions = group.questions.all()
+    questions_list = []
+    for question in questions:
+        data['value'] = question.text
+        data['id'] = question.pk
+        questions_list.append(data.copy())
+
+    return JsonResponse(questions_list, safe=False)
+
+def create_question(request, pk):
+    group = get_object_or_404(Group, pk=pk)
+    q = Question(group=group, text = request.POST["text"])
+    q.save()
+
+    data = dict()
+    data["pk"] = q.pk
+
+    return JsonResponse(data)
+
+def delete_question(request, pk):
+    q = get_object_or_404(Question, pk=pk)
+
+    q.delete()
+
+    return JsonResponse({'none':'none'})
