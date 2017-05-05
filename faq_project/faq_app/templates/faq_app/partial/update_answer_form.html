@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 {% load static %}
-<form method="post" action="{% url 'create_answer' pk=pk %}" class ="js-answer-create-form">
+<form method="post" action="{% url 'update_answer' pk=pk %}" class ="js-answer-update-form">
 	{% csrf_token %}
 	<div class="edit-answer">
 		<div class="edit-answer-top-panel">Edit the answer</div>

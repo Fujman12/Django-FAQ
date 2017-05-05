@@ -3,7 +3,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.core.urlresolvers import reverse
 
-from .models import Topic, Group, Question
+from .models import Topic, Group, Question, Answer
 from .forms import TopicForm, AnswerForm
 # Create your views here.
 def index(request):
@@ -12,6 +12,8 @@ def index(request):
 
 def topic(request,pk):
     topic = Topic.objects.filter(pk = pk).first()
+    if topic == None:
+        topic = Topic(name = "Initial")
 
     topics = Topic.objects.all()
     groups = topic.groups.all()
@@ -112,15 +114,22 @@ def create_answer(request,pk):
     data = dict()
 
     if request.method == "POST":
-        form = TopicForm(request.POST)
+        form = AnswerForm(request.POST)
         if form.is_valid():
-            form.save()
+            answ = form.save(commit=False)
+            group = get_object_or_404(Group, pk=pk)
+            answ.group = group
+            answ.save()
+
+            answers = group.answers.all()
+            data['html_answers_list'] = render_to_string('faq_app/partial/answer_list.html', {
+                'answers': answers
+            })
+
+            data['group_id'] = group.pk
+
             data['form_is_valid'] = True
 
-            topics = Topic.objects.all()
-            data['html_topics_list'] = render_to_string('faq_app/partial/topics_list_options.html', {
-                'topics': topics
-            })
         else:
             data['form_is_valid'] = False
     else:
@@ -132,4 +141,37 @@ def create_answer(request,pk):
         context,
         request=request,
     )
+
+    return JsonResponse(data)
+
+def update_answer(request,pk):
+    answer = get_object_or_404(Answer, pk=pk)
+
+    data = dict()
+
+    if request.method =="POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+
+            answers = answer.group.answers.all()
+            data['html_answers_list'] = render_to_string('faq_app/partial/answer_list.html', {
+                'answers': answers
+            })
+
+            data['group_id'] = answer.group.pk
+
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = AnswerForm(instance=answer)
+
+    context = {'form':form, 'pk':pk}
+
+    data['html_form'] = render_to_string('faq_app/partial/update_answer_form.html',
+        context,
+        request=request,
+    )
+
     return JsonResponse(data)

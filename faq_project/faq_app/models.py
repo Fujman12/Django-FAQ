@@ -39,8 +39,9 @@ class Question(models.Model):
     group = models.ForeignKey(Group, verbose_name = "Group", related_name = 'questions')
 
     def __str__(self):
-        q_str = "{} {}".format(str(self.group), str(self.text))
-        return q_str
+        #q_str = "{} {}".format(str(self.group), str(self.text))
+        
+        return str(self.text)
 
 
 class Answer(models.Model):
@@ -62,4 +63,5 @@ class Answer(models.Model):
     kind = models.CharField(max_length = 1, default = TEXT)
 
     def __str__(self):
-        a_str = "{} {}".format(self.group, self.text)
+        #a_str = "{} {}".format(str(self.group), str(self.text))
+        return str(self.text)

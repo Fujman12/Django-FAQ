@@ -171,6 +171,73 @@ $(function () {
     });
   });
 
+  $("#modal-book").on("submit", ".js-answer-create-form", function () {
+  var form = $(this);
+  $.ajax({
+    url: form.attr("action"),
+    data: form.serialize(),
+    type: form.attr("method"),
+    dataType: 'json',
+    success: function (data) {
+      if (data.form_is_valid) {
+
+        $("#modal-book").modal("hide");
+
+        var group_id = data.group_id;
+        
+        $('.fields' + group_id).html(data.html_answers_list);
+      }
+      else {
+        $("#modal-book .modal-content").html(data.html_form);
+      }
+    }
+  });
+  return false;
+  });
+
+  $(document).on('click', '.js-edit-answer', function() {
+
+    $.ajax({
+      url:  $(this).attr("data-url"),
+      type: 'get',
+      dataType: 'json',
+      beforeSend: function () {
+        $("#modal-book").modal("show");
+      },
+      success: function (data) {
+        $("#modal-book .modal-content").html(data.html_form);
+      }
+    });
+  });
+
+  $("#modal-book").on("submit", ".js-answer-update-form", function () {
+  var form = $(this);
+  $.ajax({
+    url: form.attr("action"),
+    data: form.serialize(),
+    type: form.attr("method"),
+    dataType: 'json',
+    success: function (data) {
+      if (data.form_is_valid) {
+
+        $("#modal-book").modal("hide");
+
+        var group_id = data.group_id;
+
+        $('.fields' + group_id).html(data.html_answers_list);
+
+      }
+      else {
+        $("#modal-book .modal-content").html(data.html_form);
+      }
+    }
+  });
+  return false;
+  });
+
+
+
+
 
 
 });
