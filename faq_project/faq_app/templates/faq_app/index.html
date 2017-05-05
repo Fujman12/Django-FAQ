@@ -8,7 +8,7 @@
 
 	<meta charset="utf-8">
 
-	<title>Заголовок</title>
+	<title>Django FAQ application</title>
 	<meta name="description" content="">
 
 	<!-- Bootstrap v3.3.4 Grid Styles -->
@@ -37,9 +37,9 @@
 			<div class="container">
 				<nav class="nav-icons-left">
 					<ul>
-						<li><a href="#">joboti</a></li>
-						<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-						<li><a href="#">faq</a></li>
+						<li><a href="{% url 'index' %}">joboti</a></li>
+						<li><a href="{% url 'index' %}"><span class="glyphicon glyphicon-home"></span></a></li>
+						<li><a href="{% url 'index' %}">faq</a></li>
 					</ul>
 				</nav>
 				<nav class="nav-icons-right">
