@@ -175,3 +175,17 @@ def update_answer(request,pk):
     )
 
     return JsonResponse(data)
+
+def delete_answer(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    answer.delete()
+
+    data = dict()
+
+    answers = answer.group.answers.all()
+    data['html_answers_list'] = render_to_string('faq_app/partial/answer_list.html', {
+        'answers': answers
+    })
+    data['group_id'] = answer.group.pk
+    
+    return JsonResponse(data)

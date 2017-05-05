@@ -184,7 +184,7 @@ $(function () {
         $("#modal-book").modal("hide");
 
         var group_id = data.group_id;
-        
+
         $('.fields' + group_id).html(data.html_answers_list);
       }
       else {
@@ -236,6 +236,18 @@ $(function () {
   });
 
 
+  $(document).on('click','.js-delete-answer', function(){
+    $.ajax({
+      url: $(this).attr("data-url"),
+      type: 'get',
+      success: function(data){
+        
+        var group_id = data.group_id;
+
+        $('.fields' + group_id).html(data.html_answers_list);
+      }
+    })
+  })
 
 
 

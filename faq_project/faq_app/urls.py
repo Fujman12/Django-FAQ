@@ -16,4 +16,5 @@ urlpatterns = [
 
     url(r'create_answer/(?P<pk>[0-9]+)', views.create_answer, name="create_answer"),
     url(r'update_answer/(?P<pk>[0-9]+)', views.update_answer, name="update_answer"),
+    url(r'delete_answer/(?P<pk>[0-9]+)', views.delete_answer, name="delete_answer")
 ]
