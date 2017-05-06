@@ -126,7 +126,7 @@
 														<button class="btn btn-success js-edit-answer" data-url="{% url 'update_answer' pk=answer.pk %}" style="height: 38px; width: 35px" type="button">
 															<span class="glyphicon glyphicon-cog"></span>
 														</button>
-														<button class="btn btn-danger js-delete-answer" style="height: 38px; width: 35px" type="button">
+														<button class="btn btn-danger js-delete-answer" data-url="{% url 'delete_answer' pk=answer.pk %}" style="height: 38px; width: 35px" type="button">
 															<span class="glyphicon glyphicon-minus"></span>
 														</button>
 													</span>
@@ -144,7 +144,7 @@
 																	<button class="btn btn-success js-edit-answer" data-url="{% url 'update_answer' pk=answer.pk %}" type="button">
 																		<span class="glyphicon glyphicon-cog"></span>
 																	</button>
-																	<button class="btn btn-danger js-delete-answer" type="button">
+																	<button class="btn btn-danger js-delete-answer" data-url="{% url 'delete_answer' pk=answer.pk %}" type="button">
 																		<span class="glyphicon glyphicon-minus"></span>
 																	</button>
 																</span>
