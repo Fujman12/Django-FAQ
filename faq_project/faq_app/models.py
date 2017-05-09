@@ -40,7 +40,7 @@ class Question(models.Model):
 
     def __str__(self):
         #q_str = "{} {}".format(str(self.group), str(self.text))
-        
+
         return str(self.text)
 
 
@@ -61,6 +61,9 @@ class Answer(models.Model):
     text = models.CharField("Answer text", max_length = 150)
     group = models.ForeignKey(Group, verbose_name = "Group", related_name = 'answers')
     kind = models.CharField(max_length = 1, default = TEXT)
+
+    ###  only for pictures
+    image_name = models.CharField('Image name', max_length = 150, blank = True, null = True)
 
     def __str__(self):
         #a_str = "{} {}".format(str(self.group), str(self.text))

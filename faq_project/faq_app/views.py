@@ -187,5 +187,31 @@ def delete_answer(request, pk):
         'answers': answers
     })
     data['group_id'] = answer.group.pk
-    
+
+    return JsonResponse(data)
+
+def get_answer_string(group):
+    line = ''
+    for answer in group.answers.all():
+        if answer.image_name == None:
+            line += answer.text + " | "
+        else:
+            line += answer.text + " || " + answer.image_name + " | "
+
+    line = line[:-2]
+
+    return line
+
+def create_json(request, pk):
+    topic = get_object_or_404(Topic, pk=pk)
+
+    data = dict()
+
+    groups = topic.groups.active()
+
+    for group in groups:
+        answers_string = get_answer_string(group)
+        for question in group.questions.all():
+            data.update({question.text: answers_string})
+
     return JsonResponse(data)

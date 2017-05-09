@@ -75,7 +75,7 @@
 									</select>
 								</div>
 								<div class="buttons">
-									<input type="submit" value="SAVE ALL / TRAIN" class="btn btn-space btn-primary hover">
+									<button class="btn btn-space btn-primary hover" onclick="window.open('{% url 'create_json' pk=current_topic.pk %}')" >Save All / Train</button>
 									<button class="btn btn-space btn-primary js-new-topic">New topic <span class="glyphicon glyphicon-plus-sign"></span></button>
 									<button class="btn btn-space btn-primary js-new-group" data-url="{% url 'create_group' pk=current_topic.pk %}">New Q/A <span class="glyphicon glyphicon-plus-sign"></span></button>
 								</div>
@@ -96,7 +96,7 @@
 								</div>
 								<div id="collapse-{{group.pk}}" class="panel-collapse collapse">
 									<div class="panel-body">
-										<input type="text" class="form-control lol" data-delimiter="/"  id="tokenfield{{group.pk}}" group-id="{{group.pk}}" placeholder="Type something"/>
+										<input type="text" class="form-control tkn" data-delimiter="/"  id="tokenfield{{group.pk}}" group-id="{{group.pk}}" placeholder="Type something"/>
 										<span class="fields{{group.pk}}">
 											{% for answer in group.answers.all %}
 												{% if answer.kind == '0' %}
@@ -153,6 +153,27 @@
 													</div>
 												</div>
 												{% endif %}
+
+												{% if answer.kind == '3' %}
+												<div class="control-group" id="fields">
+													<div class="controls">
+														<form role="form" autocomplete="off">
+															<div class="entry input-group col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-xs-12">
+																<a class="input-group-links" target="_blank" href="{{answer.text}}" >Map:    {{answer.text}}</a>
+																<span class="input-group-btn">
+																	<button class="btn btn-success js-edit-answer" data-url="{% url 'update_answer' pk=answer.pk %}" type="button">
+																		<span class="glyphicon glyphicon-cog"></span>
+																	</button>
+																	<button class="btn btn-danger js-delete-answer" data-url="{% url 'delete_answer' pk=answer.pk %}" type="button">
+																		<span class="glyphicon glyphicon-minus"></span>
+																	</button>
+																</span>
+															</div>
+														</form>
+													</div>
+												</div>
+												{% endif %}
+
 											{% endfor %}
 
 

@@ -5,30 +5,56 @@ $(function() {
 		// 	var ControlGroup = $('.control-group:first').css({"display": "block"});
 		// 	$(ControlGroup.clone()).val('').appendTo(Fields);
 		// });
+
+		function check_input(){
+			if ($('.answer-hidden-kind').val() != '1') {
+
+				$("div.image-name-wrapper").hide();
+
+			} else{
+
+				$("div.image-name-wrapper").show();
+				
+			}
+		}
+
+
 		$('.edit-answer-mnu #text').addClass("active")
 		$('.edit-answer-mnu #video').click(function() {
+
 			$('body .edit-answer .edit-answer-mnu ul li').addClass("inactive").removeClass("active");
 			$(this).addClass("active").removeClass("inactive");
-			$('.edit-answer div[class^="edit-answer-content"] label').html('Video url:');
+			$('.edit-answer div[class^="edit-answer-content"] label.vasya').html('Video url:');
 			$('.answer-hidden-kind').val('2');
+
+			check_input();
 		});
 		$('.edit-answer-mnu #text').click(function() {
+
 			$('body .edit-answer .edit-answer-mnu ul li').addClass("inactive").removeClass("active");
 			$(this).addClass("active").removeClass("inactive");
-			$('.edit-answer div[class^="edit-answer-content"] label').html('Text:');
+			$('.edit-answer div[class^="edit-answer-content"] label.vasya').html('Text:');
 			$('.answer-hidden-kind').val('0');
+
+			check_input();
 		});
 		$('.edit-answer-mnu #maps').click(function() {
+
 			$('body .edit-answer .edit-answer-mnu ul li').addClass("inactive").removeClass("active");
 			$(this).addClass("active").removeClass("inactive");
-			$('.edit-answer div[class^="edit-answer-content"] label').html('Map coordinates:');
+			$('.edit-answer div[class^="edit-answer-content"] label.vasya').html('Map coordinates:');
 			$('.answer-hidden-kind').val('3');
+
+			check_input();
 		});
 		$('.edit-answer-mnu #picture').click(function() {
+
 			$('body .edit-answer .edit-answer-mnu ul li').addClass("inactive").removeClass("active");
 			$(this).addClass("active").removeClass("inactive")
-			$('.edit-answer div[class^="edit-answer-content"] label').html('Image url:');
+			$('.edit-answer div[class^="edit-answer-content"] label.vasya').html('Image url:');
 			$('.answer-hidden-kind').val('1');
+
+			check_input();
 		});
 		// $('form>.input-group').click(function(e) {
 		// 	$(this).addClass('field-remove');

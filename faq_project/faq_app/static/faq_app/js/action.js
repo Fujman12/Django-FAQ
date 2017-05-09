@@ -109,13 +109,16 @@ $(function () {
 
   })
 
-  $(".lol")
+  var i = '<i class="icon mdi mdi-chevron-down"></i>'
+
+  $(".tkn")
 
   .on('tokenfield:createdtoken', function (e) {
   // Über-simplistic e-mail validation
+    var group_id = $(this).attr('group-id');
     if(e.attrs.id == null){
 
-      var group_id = $(this).attr('group-id');
+
       $.ajax({
         url: '/faq/create_question/' + group_id,
         type: 'post',
@@ -123,12 +126,17 @@ $(function () {
         success: function (data) {
           //alert("Fuck yeah!" + data.pk);
           e.attrs.id = data.pk;
+
         }
       });
     }
-    console.log(e.attrs.id);
-
+    var new_header = ($(this).parent().children('div.token:first').children('span').html());
+    //console.log(group_id);
+    if (new_header != null) {
+      $('a[href$="#collapse-'+ group_id + '"]').html(i + new_header);
+    }
   })
+
   .on('tokenfield:editedtoken', function (e) {
     // Über-simplistic e-mail validation
 
@@ -145,6 +153,8 @@ $(function () {
   })
 
   .on('tokenfield:removedtoken', function (e) {
+    var group_id = $(this).attr('group-id');
+
     $.ajax({
       url: '/faq/delete_question/' + e.attrs.id,
       type: 'get',
@@ -153,6 +163,12 @@ $(function () {
         //alert("Question " + e.attrs.value +" removed");
       }
     });
+    var new_header = ($(this).parent().children('div.token:first').children('span').html());
+    //console.log(group_id);
+    if (new_header != null) {
+      $('a[href$="#collapse-'+ group_id + '"]').html(i + new_header);
+    }
+
     //alert('Token removed! Token value was: ' + e.attrs.value)
   })
 
@@ -206,6 +222,32 @@ $(function () {
       },
       success: function (data) {
         $("#modal-book .modal-content").html(data.html_form);
+
+        var tab_value = $('.answer-hidden-kind').val();
+    		if (tab_value != null) {
+
+    			switch (tab_value) {
+    				case '0':
+    					$('.edit-answer-mnu #text').trigger("click");
+    					break;
+
+    				case '1':
+    					$('.edit-answer-mnu #picture').trigger("click");
+    					break;
+
+    				case '2':
+    					$('.edit-answer-mnu #video').trigger("click");
+    					break;
+
+    				case '3':
+    					$('.edit-answer-mnu #maps').trigger("click");
+    					break;
+
+    				default:
+    					break;
+
+    			}
+    		}
       }
     });
   });
@@ -241,7 +283,7 @@ $(function () {
       url: $(this).attr("data-url"),
       type: 'get',
       success: function(data){
-        
+
         var group_id = data.group_id;
 
         $('.fields' + group_id).html(data.html_answers_list);

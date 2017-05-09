@@ -22,6 +22,13 @@
 
 				{% render_field form.kind class="answer-hidden-kind" %}
 
+				<div class = "image-name-wrapper" style="display:none">
+					<br>
+					<label for="{{form.image_name.id_for_label}}" class="image-name" >Image name:</label>
+					{% render_field form.image_name class="answer-hidden-image-name" %}
+				</div>
+
+
 			</div>
 		</div>
 		<div class="edit-answer-buttons">

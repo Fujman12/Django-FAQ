@@ -9,5 +9,5 @@ class TopicForm(forms.ModelForm):
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
-        fields = ('text','kind',)
+        fields = ('text','kind','image_name')
         widgets = {'kind':forms.HiddenInput()}
