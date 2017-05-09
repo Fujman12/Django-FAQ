@@ -15,7 +15,7 @@
 		<div class="edit-answer-content-text">
 			<div class="edit-answer-wrapper">
 				<label for="{{form.text.id_for_label}}" class="vasya">Text *</label>
-				{% render_field form.text class="form-control" placeholder="..." %}
+				{% render_field form.text class="form-control text-input" placeholder="..." %}
 				{% for error in form.text.errors %}
 					<p class="help-block">{{ error }}</p>
 				{% endfor %}

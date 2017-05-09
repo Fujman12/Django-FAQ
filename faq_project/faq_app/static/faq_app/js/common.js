@@ -14,7 +14,7 @@ $(function() {
 			} else{
 
 				$("div.image-name-wrapper").show();
-				
+
 			}
 		}
 
@@ -36,13 +36,14 @@ $(function() {
 			$('.edit-answer div[class^="edit-answer-content"] label.vasya').html('Text:');
 			$('.answer-hidden-kind').val('0');
 
+			//$(".text-input").val('');
 			check_input();
 		});
 		$('.edit-answer-mnu #maps').click(function() {
 
 			$('body .edit-answer .edit-answer-mnu ul li').addClass("inactive").removeClass("active");
 			$(this).addClass("active").removeClass("inactive");
-			$('.edit-answer div[class^="edit-answer-content"] label.vasya').html('Map coordinates:');
+			$('.edit-answer div[class^="edit-answer-content"] label.vasya').html('Map url:');
 			$('.answer-hidden-kind').val('3');
 
 			check_input();
