@@ -18,8 +18,10 @@
 
 	<!-- Load Main CSS Compilled without JS -->
 	<noscript>
-		<!--link rel="stylesheet" href="_main.min.css"-->
+
 	</noscript>
+	<link rel="stylesheet" href="{% static 'faq_app/css/header.min.css'%}">
+	<link rel="stylesheet" href="{% static 'faq_app/css/main.min.css'%}">
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -257,14 +259,14 @@
 		});
 	</script>
 	<!-- Load CSS -->
-	<script>
+	<!--script>
 		function loadCSS(hf) {
 			var ms=document.createElement("link");ms.rel="stylesheet";
 			ms.href=hf;document.getElementsByTagName("head")[0].appendChild(ms);
 		}
 		loadCSS("{% static 'faq_app/css/header.min.css'%}"); //Header Styles (compress & paste to header after release)
 		loadCSS("{% static 'faq_app/css/main.min.css'%}");   //User Styles + Media Queries
-	</script>
+	</script-->
 	<script>
 		$("input[id^='tokenfield']").tokenfield();
 
